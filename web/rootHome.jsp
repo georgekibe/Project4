@@ -14,7 +14,7 @@
     <div id="results">
         <%
             if (request.getAttribute("output") != null) {
-                out.println(request.getAttribute("output"));
+                System.out.println(request.getAttribute("output"));
             }
         %>
     </div>
