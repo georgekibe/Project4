@@ -40,12 +40,17 @@ public class AuthenticationServlet extends HttpServlet {
                 response.sendRedirect("errorpage.html");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // For debugging in logs only.
+            request.setAttribute("error", "An internal error occurred. Please contact support.");
+            request.getRequestDispatcher("errorpage.html").forward(request, response);
         }
     }
 
     private Connection getConnection(String userType) throws Exception {
         InputStream input = getServletContext().getResourceAsStream("/WEB-INF/lib/" + userType + ".properties");
+        if (input == null) {
+            throw new IOException("Properties file not found: " + userType + ".properties");
+        }
         Properties props = new Properties();
         props.load(input);
 
@@ -55,4 +60,5 @@ public class AuthenticationServlet extends HttpServlet {
 
         return DriverManager.getConnection(url, username, password);
     }
+
 }

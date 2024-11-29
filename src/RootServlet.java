@@ -42,8 +42,10 @@ public class RootServlet extends HttpServlet {
                 request.setAttribute("output", "Rows affected: " + updateCount);
             }
         } catch (Exception e) {
-            request.setAttribute("output", "Error: " + e.getMessage());
+            request.setAttribute("output", "An error occurred while processing your request.");
+            e.printStackTrace(); // For debugging logs.
         }
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("rootHome.jsp");
         dispatcher.forward(request, response);
